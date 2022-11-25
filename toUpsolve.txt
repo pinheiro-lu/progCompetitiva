@@ -1,0 +1,18 @@
+Fase Um SBC 2022 - F
+
+//Codeforces
+Dytechlab Cup 2022 - A
+Global Round 2022 - B
+Round 823 - B
+Educational Round 136 - C
+Round 826 - C
+Round 827 - E, D
+Desafio de Programação Tempo Energia - UFABC 2022 - F
+Round 828 - D
+Educational Round 138 - C
+Round 829 - B
+Round 830 - A
+Pinely Round 1 - B
+
+//AtCoder
+Regular 150 - A
