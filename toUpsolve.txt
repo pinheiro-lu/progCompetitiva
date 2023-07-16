@@ -1,7 +1,6 @@
 Fase Um SBC 2022 - F
 
 //Codeforces
-Dytechlab Cup 2022 - A
 Global Round 2022 - B
 Round 823 - B
 Educational Round 136 - C
@@ -13,7 +12,25 @@ Educational Round 138 - C
 Round 829 - B
 Round 830 - A
 Pinely Round 1 - B
+Round 860 - B
+CodeTON Round 4 - B
+Round 862 - B
+Round 863 - E, A
+Educational Round 146 - C
+Round 865 Div 2 - C
+Round 867 - D
 
 //AtCoder
 Regular 150 - A
 Grand 059 - A
+Regular 159 - A
+Begginer 298 - B
+Begginer 308 - C, D
+
+//RPC
+03 - G, K
+
+//Codechef
+Starters 83 - Order by XOR
+Starters 85 - TripTastic
+Starters 86 - String Game, Largest Y

@@ -1,25 +1,33 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define debug(args...) //printf(args)
-#define endl '\n'
-#define MAXA 100004
-#define MAXB 1000000006
-
 typedef long long ll;
-
-//int a[MAXA];
-//int bfi[MAXA], bfr[MAXA];
 
 void solve(void) {
 	int n, k;
 	
 	cin >> n >> k;
-	
-	ll s[k];
-	
+
+	vector <ll> a(k);
+
 	for (int i = 0; i < k; i++) {
-		cin >> s[i];
+		cin >> a[i];
+	}
+		
+	if (k == 1) {
+		cout << "yes\n";
+		return;
+	}
+	
+
+	vector<ll> b(k-1);
+	for (int i = 0; i < k-1; i++) {
+		b[i] = a[i+1]-a[i];
+	}
+	if (is_sorted(b.begin(), b.end()) && ((n-k+1)*b[0] >= a[0])) {
+		cout << "yes\n";
+	} else {
+		cout << "no\n";
 	}
 }
 
