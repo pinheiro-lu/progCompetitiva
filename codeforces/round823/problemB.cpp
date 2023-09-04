@@ -6,57 +6,58 @@ using namespace std;
 
 #define MAX 100000000
 
+typedef long long ll;
+
 void solve (void) {
 	int n;
-	
-	scanf("%d", &n);
-	
-	int x[n];
-	int t[n];
-	
-	for (int i = 0; i < n; i++) {
-		scanf("%d", &x[i]);
+
+	cin >> n;
+	pair<ll, ll> x[n];
+
+	for (int i = 0; i < n; ++i) {
+		cin >> x[i].first;
+		x[i].first*=2;
 	}
-	for (int i = 0; i < n; i++) {
-		scanf("%d", &t[i]);
+	for (int i = 0; i < n; ++i) {
+		cin >> x[i].second;
+		x[i].second*=2;
 	}
-	
-	int l = -1, r = MAX, mxl = 0, mnr = MAX;
-	while (r - l > 1) {
-		int m = (r + l) / 2;
-		
-		for (int i = 0; i < n; i++) {
-			if (t[i] > m) {
-				mxl = MAX;
-				mnr = 0;
-				break;
-			}
-			mxl = max(mxl, x[i] - m + t[i]);
-			mnr = min(mnr, x[i] + m - t[i]);
+	ll l = 0, r = 1e8; 
+
+	sort(x, x + n);
+	ll ans;
+
+	while (l < r) {
+		ans = (l + r) / 2;
+
+		pair<ll, ll> mx, aux;
+		mx = make_pair(0,0);
+
+		for (int i = 0; i < n; ++i) {
+			aux = make_pair(i, x[i].second+abs(x[i].first-ans));
+			mx = max(mx, aux, [](const auto& l, const auto& r) {
+				return l.second < r.second;
+			});
 		}
-		
-		if (mxl <= mnr) r = m;
-		else l = m;
+
+		if (x[mx.first].first > ans) {
+			l = ans;
+		} else if (x[mx.first].first < ans) {
+			r = ans;
+		} else break;
+		cout << l << ' ' << r << '\n';
 	}
-	
-	mxl = 0;
-	mnr = MAX;
-	
-	for (int i = 0; i < n; i++) {
-		mxl = max(mxl, x[i] - r + t[i]);
-		mnr = min(mnr, x[i] + r - t[i]);
-	}
-	double ans = (double)(mxl + mnr) / 2.0;
-	printf("%.7lf\n", ans);
-	
-	//printf("max: %d, min: %d\n", interMax, interMin);
-	
+
+	cout << ans/2;
+	if (ans & 1) cout << ".5";
+	cout << '\n';
 }
 
 int main () {
+	ios_base::sync_with_stdio(0); cin.tie(0);
 	int T;
 	
-	scanf("%d", &T);
+	cin >> T;
 	
 	while (T--)
 		solve();
