@@ -2,10 +2,7 @@ Fase Um SBC 2022 - F
 Fase Um SBC 2023 - I, E, C, G, M
 
 //Codeforces
-Round 823 - B
 Educational Round 136 - C
-Round 826 - C
-Round 827 - E, D
 Desafio de Programação Tempo Energia - UFABC 2022 - F
 Round 828 - D
 Educational Round 138 - C
