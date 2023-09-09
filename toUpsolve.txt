@@ -3,7 +3,6 @@ Fase Um SBC 2023 - I, E, C, G, M
 
 //Codeforces
 Educational Round 136 - C
-Round 829 - B
 Round 830 - A
 Pinely Round 1 - B
 Round 860 - B

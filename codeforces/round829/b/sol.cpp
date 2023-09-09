@@ -11,20 +11,17 @@ void solve(void) {
 
     cin >> n;
 
-    if (n == 4) {
-        cout << "2 4 1 3\n";
-        return;
-    }
+	int j = n/2 + 1;
+	int i = 1;
 
-    int j = n, k = n/2;
-    int a = n;
-    for (int i = 1; i < a; i+=2) {
-        cout << j << " " << k << " ";
-        j--;
-        k--;
-    }
-    if (n % 2) cout << j;
-    cout << endl;
+	for (int k = 0; k < n; k+=2, ++i, ++j) {
+		if ( i == n/2 + 1) {
+			cout << j; break;
+		}
+		cout << j << ' ' << i << ' ';
+	}
+	cout << '\n';
+
 }
 
 int main () {
