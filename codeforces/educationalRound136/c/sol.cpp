@@ -5,7 +5,7 @@ using namespace std;
 #define endl '\n'
 #define MOD 998244353
 
-#define int unsigned long long
+#define int long long
 
 int wins[2][71];
 
@@ -17,7 +17,7 @@ int modPow(int b, int p,int m) {
 	if (p == 0) return 1;
 	int ans = modPow(b,p/2, m);
 	ans = mod(ans*ans, m);
-	if (ans & 1) ans = mod(ans * b, m);
+	if (p & 1) ans = mod(ans * b, m);
 //	cout << "b, p, modPow\n";
 //	cout << b << ' ' << p << ' ' << ans << '\n';
 	return ans;
@@ -35,10 +35,10 @@ int C(int n, int k) {
 		den %= MOD;
 	}
 
-/*	cout << "prod, den, modPow, modDiv\n";
-	cout << prod << ' ' << den << ' ' << modPow(den, MOD-2, MOD) <<  ' ' << (prod * modPow(den, MOD-2, MOD)) % MOD << '\n';
+	cout << "n, k, prod, den, modPow, modDiv\n";
+	cout << n << ' ' << k << ' ' << prod << ' ' << den << ' ' << modPow(den, MOD-2, MOD) <<  ' ' << (prod * modPow(den, MOD-2, MOD)) % MOD << '\n';
 	cout << "div: " << prod/den << '\n';
-	*/
+	
 	int inverse_den = modPow(den, MOD-2, MOD);
 	
 	return (prod * inverse_den) % MOD;
