@@ -10,7 +10,7 @@ using namespace std;
 int wins[2][71];
 
 int mod(int a, int m) {
-	return ((a%m)+m) % m;
+	return a%m;
 }
 
 int modPow(int b, int p,int m) {
