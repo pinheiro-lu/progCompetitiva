@@ -12,40 +12,22 @@ void solve (void) {
 	for (int i = 0; i < n; i++) {
 		cin >> a[i];
 	}
-	while (n > 1) {
-t:
-		bool ok = true;
-		while (ok) {
-			ok = false;
-			for (int i = 0; i < n; i++) {
-				if (a[i] == a[(i+1)%n]) {
-					a.erase(a.begin()+i);
-					n--;
-					ok = true;	
-				}
-			}
+
+	for (int i = 1; i <= n; ++i) {
+		if (a[i-1] != a[(i+1)%n]) {
+			a.erase(a.begin() + i);
+			++ans;
+			--n;
+			i = 0;
 		}
-		int i;
-		int j = 2;
-		while (j < n) {
-		for (i = 0; i < n; i++) {
-			if (a[i] == a[(i+j)%n]) {
-				a.erase(a.begin()+i);
-				n--;
-				ans++;
-				goto t;
-			}
-		}
-		if (i == n) {
-			j++;
-		}
-		}
-		n--;
-		a.erase(a.begin());
-		ans++;
+	}
+	if (n == 2) ans += 2;
+	else if (n == 1) ++ans;
+	else {
+		ans += n/2 + 1;
 	}
 
-	cout << ans + 1 << '\n';
+	cout << ans << '\n';
 }
 
 int main () {
