@@ -8,50 +8,41 @@ void solve() {
 	int m;
 
 	cin >> m;
-	
-	vector<int> n(m);
-	vector<vector<pair<int, bool>>> a(m);
 
-	vector<pair<int, int>> b(N, make_pair(-1,-1));
+	unordered_set<int> s[m];
+	int num[N] = {0};
+	bool valid = true;
 
-	for (int i = 0; i < m; i++) {
-		cin >> n[i];
-		a[i].resize(n[i]);
-		for (int j = 0; j < n[i]; j++) {
-			cin >> a[i][j].first;
-			a[i][j].second = true;
-			if (b[a[i][j].first].first != -1) {
-				a[b[a[i][j].first].first][b[a[i][j].first].second].second = false;
-			}
-			b[a[i][j].first].first = i;
-			b[a[i][j].first].second = j;
+	for (int i = 0; i < m; ++i) {
+		int n; cin >> n;
+		for (int j = 0; j < n; ++j) {
+			int x; cin >> x;
+			s[i].insert(x);
+			num[x] = i;
 		}
 	}
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < n[i]; j++) {
-			if (a[i][j].second) {
-				continue;
+	int p[m] = {0};
+	for (int i = 0; i < m; ++i) {
+		for (int x : s[i]) {
+			if (num[x] == i) {
+				p[i] = x;
+				break;
 			}
 		}
-		cout << "-1\n";
-		return;
-	}
-
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < n[i]; j++) {
-			if (a[i][j].second) {
-				cout << a[i][j].first << ' ';
-				continue;
-			}
+		if (!p[i]) {
+			cout << "-1\n";
+			return;
 		}
 	}
-	cout << '\n'; 
 
-
-
+	for (int i = 0; i < m; ++i) {
+		cout << p[i] << ' ';
+	}
+	cout << '\n';
 }
 
 int main() {
+	ios_base::sync_with_stdio(0); cin.tie(0);
 	int t;
 
 	cin >> t;
