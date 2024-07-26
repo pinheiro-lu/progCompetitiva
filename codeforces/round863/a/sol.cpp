@@ -7,16 +7,16 @@ void solve() {
 	cin >> n >> d;
 	string s;
 	cin >> s;
-	string ans;
-	string aux;
-	for (int i = 0; i <= n; i++) {
-		aux = s;
-		aux.insert(i, to_string(d)); 
-		if (aux > ans) {
-			ans = aux;
+
+	for (int i = 0; i < n; ++i) {
+		if (s[i] < d + '0') {
+			s.insert(i, 1, d + '0');
+			break;
 		}
 	}
-	cout << ans << '\n';
+	if (s.length() == n) s.push_back(d + '0');
+
+	cout << s << '\n';
 }
 
 int main() {

@@ -15,11 +15,7 @@ void solve() {
 		cin >> a[i];
 	}
 
-	if (a[n-2] <= a[n-1]) cout << "yes\n";
-	else {
-
-
-
+	
 }
 
 int main() {
