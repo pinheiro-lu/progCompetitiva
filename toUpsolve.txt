@@ -28,3 +28,6 @@ Begginer 318 - C, D
 Starters 83 - Order by XOR
 Starters 85 - TripTastic
 Starters 86 - String Game, Largest Y
+
+//Meta Hacker Cup 2023
+Round 1 - A, B1
