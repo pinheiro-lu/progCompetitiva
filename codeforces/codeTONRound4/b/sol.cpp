@@ -1,25 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+		
 void solve() {
 	int n;
-
 	cin >> n;
+	stack<int> q;
 
-	vector <int> a(n+1);
-	for (int i = 1; i <= n; i++) {
-		cin >> a[i];
+	if (~n & 1) {
+		cout << "-1\n";
+		return;
 	}
 
-
-	for (int i = 1; i <= n; i++) {
-		if (a[i] <= i) {
-			cout << "yes\n";
+	while (n != 1) {
+		if ((n-1)/2 & 1) {
+			n = (n-1)/2;
+			q.push(2);
+		} else if ((n+1)/2 & 1) {
+			n = (n+1)/2;
+			q.push(1);
+		} else {
+			cout << "-1\n";
 			return;
 		}
 	}
+	if (q.size() > 40) {
+		cout << "-1\n";
+		return;
+	}
+	cout << q.size() << '\n';
+	while (!q.empty()) {
+		cout << q.top() << ' ';
+		q.pop();
+	}
+	cout << '\n';
 
-	cout << "no\n";
 }	
 
 int main() {

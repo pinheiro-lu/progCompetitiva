@@ -5,20 +5,23 @@ using namespace std;
 typedef long long ll;
 
 void solve() {
-	int n;
+	int n; cin >> n;
 
-	cin >> n;
+	int pro = 1, mn;
+	int a[n];
 
-	vector<int> a(n);
-
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i <n; ++i) {
 		cin >> a[i];
 	}
-
-	
+	sort(a, a +n);
+	++a[0];
+	for (int i = 0; i < n; ++i ) {
+		pro *= a[i];
+	}
+	cout << pro << '\n';
 }
 
-int main() {
+signed main() {
 	ios_base::sync_with_stdio(0); cin.tie(0);
 	int t = 1;
 
@@ -27,4 +30,3 @@ int main() {
 
 	return 0;
 }
-
