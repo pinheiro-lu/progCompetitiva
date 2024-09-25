@@ -10,6 +10,7 @@ vector<set<int>> adj;
 bool search (int u, int v) {
 	if (u == v) return true;
 	for (int x : adj[u]) {
+		cerr << "looking " << x << " from " << u << '\n';
 		if (search(x, v)) return true;
 	}
 	return false;
@@ -25,6 +26,7 @@ void solve() {
 		u--; v--;
 		adj[u].insert(v);
 	}
+	cerr << "all inserted\n";
 
 	for (int i = 0; i < n; ++i) {
 		bool chega = true;
