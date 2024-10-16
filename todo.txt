@@ -1,0 +1,5 @@
+- Adicionar pequeno teorema de Fermat à lib
+- Adicionar teorema de Euler à lib
+- Adicionar modular inverso à lib
+- Adicionar template do makefile com -Wconversion e f-sanitize=undefined
+- Upsolve do c do abc 375

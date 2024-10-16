@@ -5,24 +5,25 @@ using namespace std;
 typedef long long ll;
 
 int n;
-ll apple[20];
+vector<ll> apple(20);
 ll total;
 ll sum;
 ll min_diff;
 
 
 void rec (int tam, int st) {
-	cout << "tam " << tam << " st " << st << " sum " << sum << " min_diff " << min_diff << '\n';
+	if (st == n) return;
 	if (tam == 1) {
-		sum += apple[st];
+		sum += apple.at(st);
 		min_diff = min(min_diff, abs(sum - (total-sum)));
-		sum -= apple[st];
+		sum -= apple.at(st);
+		rec(tam, st+1);
 		return;
 	}
 	for (int i = st; i <= n-tam; ++i) {
-		sum += apple[i];
+		sum += apple.at(i);
 		rec(tam-1, i+1);
-		sum -= apple[i];
+		sum -= apple.at(i);
 	}
 }
 
@@ -32,8 +33,8 @@ void solve() {
 	cin >> n;
 
 	for (int i = 0; i < n; ++i) {
-		cin >> apple[i];
-		total += apple[i];
+		cin >> apple.at(i);
+		total += apple.at(i);
 	}
 	min_diff = total;
 

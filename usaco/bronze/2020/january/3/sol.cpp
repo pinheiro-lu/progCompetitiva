@@ -4,6 +4,8 @@ using namespace std;
 
 typedef long long ll;
 
+#define int ll
+
 int n, k;
 
 int x;
@@ -15,13 +17,20 @@ void solve() {
 	if ((x+1)*x/2 >= k) {
 		ans = ceil((-1 + sqrt(1 + 8*k))/2);
 	} else {
-		ans = floor((-2* x - 0.5 + sqrt((2*x + 0.5)*(2*x + 0.5) -4*(3*x/2 + x*x/2 - k)))/2);
-		ans *= 2;
-		ans += x;
-		int falta = k - ((x+1)*x/2 + (1+ans)*ans/2 + (1+ans)*x + ans*ans/2 + ans*x);
-		if (falta > 0)
-			ans += ceil((double)falta/(double)x);
-
+		ans = x;
+		int falta = k - (x+1)*x/2;
+		cerr << "falta " << falta << '\n';
+		long double d = (0.5-2.0*(long double) x + (long double) sqrt((2.0*x-0.5)*(2.0*x-0.5)+4.0*falta))/2;
+		cerr << d << '\n';
+		int n = floor(d);
+		if(n) {
+		ans += 2*n;
+		falta -= (x+x+n)*n;
+		}
+		cerr << "falta " << falta << '\n';
+		if (falta > 0) ++ans;
+		falta -= x+ n;
+		if (falta > 0) ++ans;
 	}
 	cout << ans << '\n';
 
