@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+
+n=40000
+for i in $(seq 1 n); do
+	cat temp.in >> in.in;
+done

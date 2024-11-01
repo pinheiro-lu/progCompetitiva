@@ -4,107 +4,168 @@ using namespace std;
 
 typedef long long ll;
 
-vector<vector<int>> in(3, vector<int>(2));
+vector<vector<int>> logo(3, vector<int>(2));
+
 vector<vector<char>> ans;
 
-int free_y;
-vector<int> free_xs;
-
-bool solved;
-
-void rec(int logo) {
-	if (logo == 3) {
-		solved = true;
-		return;
+bool put(char letter, int ini_x, int fim_x, int ini_y, int fim_y) {
+	int larg, comp;
+	cerr << "to tentando super put\n";
+	if (letter == 'B') {
+		larg = logo.at(1).at(0);
+		comp = logo.at(1).at(1);
+	} else {
+		larg = logo.at(2).at(0);
+		comp = logo.at(2).at(1);
 	}
 
-	int &comp = in.at(logo).at(0);
-	int &larg = in.at(logo).at(1);
+	cerr << "ini_x = " << ini_x << " fim_x = " << fim_x << " ini_y = " << ini_y << " fim_y = " << fim_y << '\n';
 
-	vector<int>::iterator free_x = free_xs.begin();
-
-	for (auto &it = free_xs.begin(); it != free_xs.end(); ++it) {
-		if (*it + larg <= ans.size()) {
-			free_x = it;
-			break;
-		}
-	}
-
-
-	if (free_y + comp <= ans.at(0).size() && *free_x + larg <= ans.size()) {
-		for (int i = free_y; i < comp + free_y; ++i) {
-			for (int j = *free_x; j < larg + *free_x; ++j) {
-				ans.at(i).at(j) = logo == 0 ? 'A' : logo == 1 ? 'B' : 'C';
+	if (fim_x - ini_x == larg && fim_y-ini_y == comp) {
+		for (int i = ini_y; i < fim_y; ++i) {
+			for (int j = ini_x; j < fim_x; ++j) {
+				ans.at(i).at(j) = letter;
 			}
 		}
-		free_y += comp;
-		*free_x += larg;
-
-		rec(logo + 1);
-		if (solved) return;
-		free_y -= comp;
-		*free_x -= larg;
-	} 
-
-	for (auto &it = free_xs.begin(); it != free_xs.end(); ++it) {
-		if (*it + comp <= ans.size()) {
-			free_x = it;
-			break;
-		}
+		return true;
 	}
-
-	if (free_y + larg <= ans.at(0).size() && *free_x + comp <= ans.size()) {
-		for (int i = free_y; i < larg + free_y; ++i) {
-			for (int j = *free_x; j < comp + *free_x; ++j) {
-				ans.at(i).at(j) = logo == 0 ? 'A' : logo == 1 ? 'B' : 'C';
+	swap(larg, comp);
+	if (fim_x - ini_x == larg && fim_y-ini_y == comp) {
+		for (int i = ini_y; i < fim_y; ++i) {
+			for (int j = ini_x; j < fim_x; ++j) {
+				ans.at(i).at(j) = letter;
 			}
 		}
-		*free_x += comp;
-		free_y += larg;
-
-		rec(logo + 1);
-		if (solved) return;
-		*free_x -= comp;
-		free_y -= larg;
+		return true;
 	}
-
+	cerr << "deu tudo errado\n";
+	return false;
 }
 
+bool simp_put(char letter, int ini) {
+	int larg, comp;
+	cerr << "to tentando irmao\n";
+	if (letter == 'B') {
+		larg = logo.at(1).at(0);
+		comp = logo.at(1).at(1);
+	} else {
+		larg = logo.at(2).at(0);
+		comp = logo.at(2).at(1);
+	}
+
+	if (larg == ans.size() && ini + comp <= ans.size()) {
+		for (int i = ini; i < ini + comp; ++i) {
+			for (int j = 0; j < ans.size(); ++j) {
+				ans.at(i).at(j) = letter;
+			}
+		}
+		return true;
+	}
+	swap(larg, comp);
+	if (larg == ans.size() && ini + comp <= ans.size()) {
+		for (int i = ini; i < ini + comp; ++i) {
+			for (int j = 0; j < ans.size(); ++j) {
+				ans.at(i).at(j) = letter;
+			}
+		}
+		return true;
+	}
+	return false;
+}
+
+bool worst_put (int y) {
+	int y_size = ans.size() - y;
+	int x_b, x_c;
+	cerr << "y_size = " << y_size << " ans[1][0] " << ans.at(1).at(0) << '\n';
+	cerr << "agora o bagui é ruim\n";
+	if (y_size == logo.at(1).at(0)) {
+		x_b = logo.at(1).at(1); 
+	} else if (y_size == logo.at(1).at(1)){
+		x_b = logo.at(1).at(0);
+	} else {
+		return false;
+	}
+	cerr << "do primeiro passou\n";
+	if (y_size == logo.at(2).at(0)) {
+		x_c = logo.at(2).at(1); 
+	} else if (y_size == logo.at(2).at(1)){
+		x_c = logo.at(2).at(0);
+	} else {
+		return false;
+	}
+
+	cerr << "do segundo passou\n";
+	if (x_c + x_b != ans.size()) return false;
+	cerr << "do terceiro passou\n";
+
+	for (int i = y; i < ans.size(); ++i) {
+		for (int j = 0; j < ans.size(); ++j) {
+			if (j < x_b) ans.at(i).at(j) = 'B';
+			else ans.at(i).at(j) = 'C';
+		}
+	}
+	return true;
+}
 
 void solve() {
 	int sum = 0;
-	for (int i = 0; i < 3; ++i) {
-		int aux = 1;
-		for (int j = 0; j < 2; ++j) {
-			cin >> in.at(i).at(j);
-			aux *= in.at(i).at(j);
+	for (auto &l : logo) {
+		int prod = 1;
+		for (int &x : l) {
+			cin >> x;
+			prod *= x;
 		}
-		sum += aux;
+		sort(l.begin(), l.end());
+		sum += prod;
 	}
 
 	int side = sqrt(sum);
-
-	ans.resize(side, vector<char>(side));
-	free_xs.resize(side);
-
-	rec(0);
-
-	if (!solved) {
-		cout << -1 << '\n';
+	if (side * side != sum) {
+		cout << "-1\n";
 		return;
 	}
 
-	cout << side << '\n';
+	ans.resize(side, vector<char>(side));
 
-	for (auto &lin : ans) {
-		for (char &c : lin) {
-			cout << c;
+	for (int i = 0; i < logo.at(0).at(0); ++i) {
+		for (int j = 0; j < logo.at(0).at(1); ++j) {
+			ans.at(i).at(j) = 'A';
 		}
-		cout << '\n';
 	}
 
-	
-
+	int &fim_x_a = logo.at(0).at(1), &fim_y_a = logo.at(0).at(0);
+	int &y_b = logo.at(1).at(0) == ans.size() ? logo.at(1).at(1) : logo.at(1).at(0);
+	if (fim_x_a == ans.size() && ((simp_put('B', fim_y_a) && simp_put('C', fim_y_a + y_b)) || (worst_put(fim_y_a)))||
+			// letra, ini_x, fim_x, ini_y, fim_y
+			(put('B', fim_x_a, ans.size(), 0, fim_y_a) && put('C', 0, ans.size(), fim_y_a, ans.size())) 
+			||(put('B', fim_x_a, ans.size(), 0, ans.size()) && put('C', 0, fim_x_a, fim_y_a, ans.size())) 
+			||(put('B', 0, fim_x_a, fim_y_a, ans.size()) && put('C', fim_x_a, ans.size(), 0, ans.size())) 
+			||(put('B', 0, ans.size(), fim_y_a, ans.size()) && put('C', fim_x_a, ans.size(), 0, fim_y_a))
+			) {
+//		for (auto &l : ans) {
+//			for (char &x: l) {
+//				if (x != 'A' && x != 'B' && x != 'C') {
+//					cout << "-1\n";
+//					return;
+//				}
+//			}
+//		}
+		cout << ans.size() << '\n';
+		for (auto &l : ans) {
+			for (char &x: l) {
+				cout << x;
+			}
+			cout << '\n';
+		}
+	} else {
+		for (auto &l : ans) {
+			for (char &x : l) {
+				cerr << x;
+			}
+			cerr << '\n';
+		}
+		cout << "-1\n";
+	}
 }
 
 signed main() {

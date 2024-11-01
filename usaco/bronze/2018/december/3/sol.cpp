@@ -18,23 +18,25 @@ void rec(int bkt, int vol) {
 	}
 	if (bkt & 1) {
 		//cerr << "botando no segundo\n";
-		if(vol)sc_barn.push_back(vol);
+		sc_barn.push_back(vol);
 		for (int &x : sc_barn) {
 	//		cerr << x << ' ';
 		}
-		cerr << '\n';
+		//cerr << '\n';
 		for (int &x : sc_barn) {
 			if (x == 0) continue;
 			int aux = x;
+			sum -= x;
 			x = 0;
 			cerr << "x2 = " << x << '\n';
 			rec(bkt+1, aux);
 			x = aux;
+			sum += x;
 		}
-		if(vol)sc_barn.pop_back();
+		sc_barn.pop_back();
 	} else {
 	//	cerr << "botando no primeiro\n";
-		if(vol)fs_barn.push_back(vol);
+		fs_barn.push_back(vol);
 		for (int &x : fs_barn) {
 			if (x == 0) continue;
 			int aux = x;
@@ -45,7 +47,7 @@ void rec(int bkt, int vol) {
 			x = aux;
 			sum -= x;
 		}
-		if(vol)fs_barn.pop_back();
+		fs_barn.pop_back();
 	}
 }
 

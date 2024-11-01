@@ -1,0 +1,19 @@
+- Adicionar pequeno teorema de Fermat à lib
+- Adicionar teorema de Euler à lib
+- Adicionar modular inverso à lib
+- Adicionar template do makefile com -Wconversion e f-sanitizer=undefined
+- Fazer upsolve do codeforces round 952 
+	- F*
+	- G*
+- Fazer upsolve dos problemas da escola de primavera
+    - 1270*
+    - 2185*
+    - 1434*
+- Fazer upsolve dos problemas do contest de primavera
+	- 1477*
+	- 2470*
+	- 1224
+	- 1365
+- Adicionar lazy da segtree à lib
+- Remover copilot do cpp
+- Criar meus dotfiles

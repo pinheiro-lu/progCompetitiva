@@ -12,29 +12,37 @@ void solve() {
 		for (int j = 0; j < n; j++) cin >> a[i][j];
 	}
 
-	for (int i = 0; i < n; ++i) {
-		for (int j = 0; j < n; ++j) {
+	for (int i = 0; i < n/2; ++i) {
+		for (int j = 0; j < n/2; ++j) {
 			int calc = min((i < n/2 ? +n/2-1-abs(i-n/2+1) : n/2-abs(i-n/2+1)) % 4, (j < n/2 ? +n/2-1-abs(j-n/2+1) : n/2-abs(j-n/2+1)) % 4);
-			switch (calc) {
+			calc = (1 + min(i, j)) % 4;
+			while (calc--) {
+				swap(a.at(i).at(j), a.at(j).at(n-1-i));
+				swap(a.at(i).at(j), a.at(n-1-i).at(n-1-j));
+				swap(a.at(i).at(j), a.at(n-1-j).at(i));
+			}
+		/*	switch (calc) {
 				case 0:
-				//a.at(i).at(j) = '0';
+				a.at(i).at(j) = '0';
 				break;
 				case 1:
-				//a.at(i).at(j) = '1';
-				swap(a.at(i).at(j), a.at(j).at(n-1-i));
+				a.at(i).at(j) = '1';
+			//	swap(a.at(i).at(j), a.at(j).at(n-1-i));
 				break;
 				case 2:
-				//a.at(i).at(j) = '2';
-				swap(a.at(i).at(j), a.at(n-i).at(n-j));
+				a.at(i).at(j) = '2';
+			//	swap(a.at(i).at(j), a.at(n-1-i).at(n-1-j));
 				break;
 				case 3:
-				//a.at(i).at(j) = '3';
-				swap(a.at(i).at(j), a.at(n-j).at(i));
+				a.at(i).at(j) = '3';
+			//	swap(a.at(i).at(j), a.at(n-1-j).at(i));
 				break;
 				default:
 				cerr << calc << endl;
 				break;
 			}
+			*/
+			
 		}
 	}
 
