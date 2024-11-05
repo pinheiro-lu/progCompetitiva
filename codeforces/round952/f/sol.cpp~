@@ -7,7 +7,7 @@ typedef long long ll;
 ll h;
 int n;
 
-ll dmg[200'001];
+map<int, ll> mp;
 ll a[200'000];
 int c[200'000];
 
@@ -15,8 +15,8 @@ ll bs(ll l, ll r) {
 	if (l == r) return l;
 	ll x = (l + r)/2;
 	ll sum = 0;
-	for (int i = 1; i <= n; ++i) {
-		sum += x/i * dmg[i];
+	for (auto &[i, dmg] : mp) {
+		sum += x/i * dmg;
 	}
 	if (sum >= h) return bs(l, x);
 	return bs(x+1, r);
@@ -32,10 +32,11 @@ void solve() {
 
 	for (int i = 0; i < n; ++i) {
 		cin >> c[i];
-	}
-
-	for (int i = 0; i < n; ++i) {
-		dmg[c[i]] += a[i];
+		if (mp.count(c[i])) {
+			mp.insert_or_assign(c[i], mp.at(c[i])+a[i]);
+		} else {
+			mp.insert({c[i], a[i]});
+		}
 	}
 
 	if (h <= 0) {
@@ -43,8 +44,8 @@ void solve() {
 	} else {
 		cout << 1 + bs(1, 4e10) << '\n';
 	}
+	mp.clear();
 
-	memset(dmg, 0, sizeof dmg);
 }
 
 signed main() {

@@ -2,9 +2,6 @@
 - Adicionar teorema de Euler à lib
 - Adicionar modular inverso à lib
 - Adicionar template do makefile com -Wconversion e f-sanitizer=undefined
-- Fazer upsolve do codeforces round 952 
-	- F*
-	- G*
 - Fazer upsolve dos problemas da escola de primavera
     - 1270*
     - 2185*
@@ -12,7 +9,10 @@
 - Fazer upsolve dos problemas do contest de primavera
 	- 1477*
 	- 2470*
-	- 1365
+	- 1365*
+- Fazer upsolve do atcoder beginner 378
+	- D
+	- E
 - Adicionar lazy da segtree à lib
 - Remover copilot do cpp
 - Criar meus dotfiles

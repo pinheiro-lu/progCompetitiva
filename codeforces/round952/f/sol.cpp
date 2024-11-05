@@ -7,16 +7,16 @@ typedef long long ll;
 ll h;
 int n;
 
-ll dmg[200'001];
-ll a[200'000];
-int c[200'000];
+map<int, ll> mp;
+vector<int> c;
+vector<ll> a;
 
 ll bs(ll l, ll r) {
 	if (l == r) return l;
 	ll x = (l + r)/2;
 	ll sum = 0;
-	for (int i = 1; i <= 2e5; ++i) {
-		sum += x/i * dmg[i];
+	for (auto &[i, dmg] : mp) {
+		sum += x/i * dmg;
 	}
 	if (sum >= h) return bs(l, x);
 	return bs(x+1, r);
@@ -25,17 +25,21 @@ ll bs(ll l, ll r) {
 void solve() {
 	cin >> h >> n;
 
+	a.resize(n);
+	c.resize(n);
+
 	for (int i = 0; i < n; ++i) {
-		cin >> a[i];
-		h-=a[i];
+		cin >> a.at(i);
+		h-=a.at(i);
 	}
 
 	for (int i = 0; i < n; ++i) {
-		cin >> c[i];
-	}
-
-	for (int i = 0; i < n; ++i) {
-		dmg[c[i]] += a[i];
+		cin >> c.at(i);
+		if (mp.count(c.at(i))) {
+			mp.insert_or_assign(c.at(i), mp.at(c.at(i))+a.at(i));
+		} else {
+			mp.insert({c.at(i), a.at(i)});
+		}
 	}
 
 	if (h <= 0) {
@@ -43,8 +47,8 @@ void solve() {
 	} else {
 		cout << 1 + bs(1, 4e10) << '\n';
 	}
+	mp.clear();
 
-	memset(dmg, 0, sizeof dmg);
 }
 
 signed main() {
