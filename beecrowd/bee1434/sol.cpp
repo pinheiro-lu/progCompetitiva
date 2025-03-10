@@ -38,7 +38,7 @@ struct SegTree {
 			lazy.at(2*i) = comp(lazy.at(2*i), lazy.at(i));
 			lazy.at(2*i+1) = comp(lazy.at(2*i+1), lazy.at(i));
 		}
-		cerr << "prop " << i << ' ' << l << ' ' << r << ' ' << st.at(i) << ' ' << lazy.at(i) << endl;
+		//cerr << "prop " << i << ' ' << l << ' ' << r << ' ' << st.at(i) << ' ' << lazy.at(i) << endl;
 		st.at(i) = comp(st.at(i), lazy.at(i)*(r-l+1));
 		lazy.at(i) = 0;
 	}
@@ -94,7 +94,7 @@ int solve(int s, int r) {
 	int prox, proxIna = INT_MAX;
 	for (int i = 0; i < c; ++i) {
 		int ina;
-		if (i != s && ((ina = st->query(1, 0, c-1, i, i)) < proxIna)) {
+		if (str.at(s).at(i) && ((ina = st->query(1, 0, c-1, i, i)) < proxIna)) {
 			prox = i;
 			proxIna = ina;
 		}
@@ -147,6 +147,7 @@ signed main() {
 		}
 		st->upd_range(1, 0, c-1, 0, c-1, 1);
 		cout << solve(s, n-1) << '\n';
+		cerr << '\n';
 
 		cin >> c;
 	}

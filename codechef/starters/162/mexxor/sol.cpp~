@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+typedef vector<int> vi;
+
+#define f first
+#define s second
+
+int l, r, x, y;
+
+void solve (int x, int n) {
+	if (y < l || y > r) return;
+	for (int i = 0; i < n ; ++i) {
+		y = x ^ (1 << i);
+		int min = y;
+		for (int j = 0; j < i; ++j) {
+			min &= ~(1 << j);
+		}
+		int max = y;
+		for (int j = 0; j < i; ++j) {
+			max |= (1 << j);
+		}
+		if (min < l || max > r) {
+			solve(y, i);
+			return;
+		}
+	}
+}
+
+signed main() {
+	ios_base::sync_with_stdio(0); cin.tie(0);
+
+	int tt;
+	cin >> tt;
+	while (tt--) {
+		cin >> l >> r >> x;
+
+		solve(x, 33);
+
+		cout << (y ^x) << '\n';
+
+	}
+
+	return 0;
+}

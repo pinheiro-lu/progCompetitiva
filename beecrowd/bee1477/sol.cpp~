@@ -4,8 +4,10 @@ using namespace std;
 
 typedef long long ll;
 
+const int N = 1e5;
+
 int n, m;
-vector<int>p;
+int p[N][3];
 
 // vector<int> p: array to build the segment tree (0-indexed)
 // vector<int> st: segment tree (1-indexed)
@@ -13,53 +15,80 @@ vector<int>p;
 // update: O(log n)
 // build: O(n)
 struct SegTree {
-	vector<int> st;
-	vector<int> lazy;
-	int (*comp)(int, int);
+	int st[4*N][3];
+	int lazy[4*N];
+	int* (*comp)(int*, int*);
 	void build(int i, int l, int r) {
-		if (l == r) st.at(i) = p.at(l);
+		if (l == r) memcpy(st[i], p[l], sizeof p[l]);
 		else {
 			int m = (l + r) / 2;
 			build(2*i, l, m);
 			build(2*i+1, m+1, r);
-			st.at(i) = comp(st.at(2*i), st.at(2*i+1));
+			memcpy(st[i], comp(st[2*i], st[2*i+1]), sizeof st[i]);
 		}
 	}
 
-	SegTree(int (*comp)(int, int)) : comp(comp) {
-		st.resize(4*n);
-		lazy.resize(4*n);
+	SegTree(int* (*comp)(int*, int*)) : comp(comp) {
+		memset(lazy, 0, sizeof lazy);
 		build(1, 0, n-1);
+	}
+
+	void op(int* s, int times) {
+		int aux[3];
+		for (int i = 0; i < 3; ++i) aux[i] = s[i];
+		for (int i = 0; i < 3; ++i) {
+			s[(i + times) % 3] = aux[i];
+		}
+		
 	}
 
 	void propagate(int i, int l, int r) {
 		if (l != r) {
-			lazy.at(2*i) += lazy.at(i);
-			lazy.at(2*i+1) += lazy.at(i);
+			lazy[2*i] += lazy[i];
+			lazy[2*i+1] += lazy[i];
 		}
-		st.at(i) += lazy.at(i)* (r-l+1);
-		lazy.at(i) = 0;
+		op(st[i], lazy[i]);
+		lazy[i] = 0;
 	}
 
-	int query(int i, int l, int r, int a, int b) {
+	int* query(int i, int l, int r, int a, int b) {
 		propagate(i, l, r);
-		if (l > b || a > r) return 0;
-		if (l >= a && b >= r) return st.at(i);
+		if (l > b || a > r) {
+			static *int c;
+			c = new int[3];
+			return c;
+		}
+		if (l >= a && b >= r) {
+			cerr << "i " << i << " l " << l << " r " << r << " st[i] " << st[i][0] << ' ' << st[i][1] << ' ' << st[i][2] << '\n';
+			return st[i];
+		}
 		int m = (l + r) / 2;
-		return comp(query(i*2, l, m, a, b), query(i*2+1, m+1,r, a, b));
+		int* a1 = query(2*i, l, m, a, b);
+		int* a2 = query(2*i+1, m+1, r, a, b);
+		int* ret = comp(query(2*i, l, m, a, b), query(2*i+1, m+1, r, a, b));
+		cerr << "i " << i << " l " << l << " r " << r << " ret " << ret[0] << ' ' << ret[1] << ' ' << ret[2] << '\n';
+		cerr << "a1 " << a1[0] << ' ' << a1[1] << ' ' << a1[2] << '\n';
+		cerr << "a2 " << a2[0] << ' ' << a2[1] << ' ' << a2[2] << '\n';
+		return ret;
 	}
 
-	void upd_range(int i, int l, int r, int a, int b, int x) {
+	void upd_range(int i, int l, int r, int a, int b) {
 		propagate(i, l, r);
 		if (l > b || a > r) return;
 		if (l >= a && b >= r) {
-			lazy.at(i) += x;
+			++lazy[i];
+			if (l != r) {
+				lazy[2*i] += lazy[i];
+				lazy[2*i+1] += lazy[i];
+			}
+			op(st[i], lazy[i]);
+			lazy[i] = 0;
 			return;
 		}
 		int m = (l + r) / 2;
-		st.at(i) += (min(r, b) - max(a, l)+1) * x;
-		upd_range(i*2, l, m, a, b, x);
-		upd_range(i*2+1, m+1, r, a, b, x);
+		upd_range(i*2, l, m, a, b);
+		upd_range(i*2+1, m+1, r, a, b);
+		memcpy(st[i], comp(st[2*i], st[2*i+1]), sizeof st[i]);
 	}
 
 };
@@ -68,27 +97,29 @@ signed main() {
 	ios_base::sync_with_stdio(0); cin.tie(0);
 
 	while (cin >> n >> m) {
-		p.resize(n);
-		SegTree s0([](int a, int b) {return a + b;});
-		SegTree s1([](int a, int b) {return a + b;});
-		SegTree s2([](int a, int b) {return a + b;});
-		s0.upd_range(1, 0, n-1, 0, n-1, 1);
+		memset(p, 0, sizeof p);
+		for (int i = 0; i < n; ++i) {
+			p[i][0] = 1;
+		}
+		SegTree st([](int* a, int* b) {
+				static int *c;
+				c = new int[3];
+				for (int i = 0; i < 3; ++i) {
+				c[i] = a[i] + b[i];
+				}
+				return c;
+				});
 		for (int i = 0; i < m; ++i) {
 			char c;
 			int a, b;
 			cin >> c >> a >> b;
 			--a, --b;
-			int temp0 = s0.query(1, 0, n-1, a, b);
-			int temp1 = s1.query(1, 0, n-1, a, b);
-			int temp2 = s2.query(1, 0, n-1, a, b);
 			if (c == 'M') {
-				cerr << temp0 << ' ' << temp1 << ' ' << temp2 << '\n';
-				s0.upd_range(1, 0, n-1, a, b, temp2-temp0);
-				s1.upd_range(1, 0, n-1, a, b, temp0-temp1);
-				s2.upd_range(1, 0, n-1, a, b, temp1-temp2);
+				st.upd_range(1, 0, n-1, a, b);
 			}
 			if (c == 'C') {
-				cout << temp0 << ' ' << temp1 << ' ' << temp2 << '\n';
+				int *ans= st.query(1, 0, n-1, a, b);
+				cout << ans[0] << ' ' << ans[1] << ' ' << ans[2] << '\n';
 			}
 		}
 		cout << '\n';

@@ -1,18 +1,44 @@
 - Adicionar pequeno teorema de Fermat à lib
 - Adicionar teorema de Euler à lib
 - Adicionar modular inverso à lib
-- Adicionar template do makefile com -Wconversion e f-sanitizer=undefined
-- Fazer upsolve dos problemas da escola de primavera
-    - 1270*
-    - 2185*
-    - 1434*
-- Fazer upsolve dos problemas do contest de primavera
-	- 1477*
-	- 2470*
-	- 1365*
+- Adicionar template do makefile com -Wconversion e f-sanitize=undefined
+'
 - Fazer upsolve do atcoder beginner 378
-	- D
-	- E
-- Adicionar lazy da segtree à lib
+	- E'*'*'*'*'
+- Adicionar lazy da segtree à lib (usar bee2185)
 - Remover copilot do cpp
 - Criar meus dotfiles
+- Generalizar key na BST
+- Adicionar bee1365 aos flashcards
+- Aprender os comandos para modo insert
+- Arrumar acentos no modo normal
+- Adicionar partial sum ao anki
+- Adicionar MST à lib
+- Adicionar intesecção de retângulos à lib || anki
+- Adicionar range update em array à lib
+- Adicionar game nim ao anki
+- Adicionar dp à lib | anki (obi 2005 pedido de desculpas)
+- wrappar o f
+- ver se tem algo para tirar do bee1270
+- ver se tem algo para tirar do running miles (prefix sums)
+- ver se tem algo para tirar do Good Subarrays (prefix sums) - solução do
+  usaco guide
+- ver se tem algo para tirar do codechef starters 162 permmodk
+- adicionar shift de um bit de um número ao anki || lib
+- adicionar ideia de soma de prefixo de painting the barn silver (segunda
+  parte do editorial) ao anki || lib
+- Fazer upsolve do USACO Bronze 2025 January
+	- 3*
+- ver se tem algo para tirar do codechef starters 162 mexxor
+- Fazer upsolve da Primeira Fase da Maratona de Programação 2005
+	- G*
+- adicionar accumlate ao anki
+- Fazer upsolve do USACO Guide
+	- Nuske vs Phantom Thnook
+- Fazer upsolve do USACO Bronze 2025 February
+	- 3
+- Fazer upsolve do atcoder beginner 395
+	- E
+	- D
+- Fazer upsolving do atcoder regular 194
+	- A

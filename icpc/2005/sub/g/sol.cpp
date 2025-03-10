@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+typedef vector<int> vi;
+typedef complex<long double> P;
+
+#define f first
+#define s second
+#define X real()
+#define Y imag()
+
+int n;
+P i, f;
+
+struct SegLine {
+	P p1;
+	P p2;
+};
+
+const int N = 152;
+const long double eps = 1e-7;
+
+array<SegLine, N> obs;
+
+array<array<long double, 2*N>, 2*N> dp;
+
+long double solve(int is, int ext1, int ie, int ext2) {
+	P s = ext1 ? obs.at(is).p2 : obs.at(is).p1;
+	P e = ext2 ? obs.at(ie).p2 : obs.at(ie).p1;
+	cerr << "from " << s.X << ' ' << s.Y << " to " << e.X << ' ' << e.Y << '\n';
+	cerr << is << ' ' << ie << '\n';
+	//cerr << dp.at(is+n*ext1).at(ie+n*ext2) << '\n';
+	if (dp.at(is+n*ext1).at(ie+n*ext2) != -1) return dp.at(is+n*ext1).at(ie+n*ext2);
+	
+	int inter = -1;
+	long double mndis = 20000;
+	for (int i = 0; i < n-1; ++i) {
+		P p1 = obs.at(i).p1;
+		P p2 = obs.at(i).p2;
+		if ((conj(p1-s)*(p1-e)).Y*(conj(p2-s)*(p2-e)).Y < -eps &&
+			(conj(s-p1)*(s-p2)).Y*(conj(e-p1)*(e-p2)).Y < -eps) { // testa se p1p2 ta no meio do caminho de s para e
+			long double dis = (conj(p1-s)*(p2-s)).Y/abs(p2-p1);
+			if (dis < mndis) {
+				inter = i;
+				mndis = dis;
+			}
+		}
+	}
+	//cerr << abs(e-s) << '\n';
+	if (inter == -1) return dp.at(is+n*ext1).at(ie+n*ext2) = abs(e-s);
+	return dp.at(is+n*ext1).at(ie+n*ext2) = min(solve(is, ext1, inter, 0) + solve(inter, 0, ie, ext2), solve(is, ext1, inter, 1) + solve(inter, 1, ie, ext2));
+}
+
+
+signed main() {
+	ios_base::sync_with_stdio(0); cin.tie(0);
+
+	int tt = 1;
+	while (true) {
+		cerr << tt++ << '\n';
+		int xi, yi, xf, yf;
+		cin >> xi >> yi >> xf >> yf >> n;
+		if (xi == 0 && yi == 0 && xf == 0 && yf == 0 && n == 0) break;
+		++n;
+		for (int i = 0; i < 2*n; ++i) fill(dp.at(i).begin(), dp.at(i).end(), -1);
+		i = P(xi, yi);
+		f = P(xf, yf);
+
+		for (int i = 0; i < n-1; ++i) {
+			auto v = &obs.at(i);
+			long double x1, y1, x2, y2;
+			cin >> x1 >> y1 >> x2 >> y2;
+			v->p1 = P(x1, y1);
+			v->p2 = P(x2, y2);
+		}
+		obs.at(n-1).p1 = i;
+		obs.at(n-1).p2 = f;
+
+		cout << fixed << setprecision(2) << solve(n-1, 0, n-1, 1)  << '\n';
+	}
+	return 0;
+}

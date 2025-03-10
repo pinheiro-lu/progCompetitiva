@@ -1,0 +1,30 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+typedef vector<int> vi;
+
+#define f first
+#define s second
+
+int n, m;
+float v;
+
+signed main() {
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	while (true) {
+		cin >> v >> n >> m;
+		int intv = 100 * v;
+		if (intv == 0) break;
+		if (n % 10000 == m % 10000) intv *= 3000;
+		else if (n % 1000 == m % 1000) intv *= 500;
+		else if (n % 100 == m % 100) intv *= 50;
+		else if ((n + 99) % 100 / 4 == (m + 99) % 100 / 4) intv *= 16;
+		else intv = 0;
+		cout << intv / 100 << '.' << intv % 100 << '\n';
+	}
+
+
+	return 0;
+}

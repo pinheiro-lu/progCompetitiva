@@ -1,0 +1,13 @@
+#!/usr/bin/bash
+
+for ((i=1; ; i++)); do
+	echo $i
+	python3 gen.py > inp.txt
+	time ./a.out < inp.txt > out1.txt
+	if echo $? > /dev/null; then
+		echo "AC"
+	else
+		echo "WA"
+		break
+	fi
+done
