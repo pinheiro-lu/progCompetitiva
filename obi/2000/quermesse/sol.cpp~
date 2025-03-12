@@ -1,0 +1,32 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+typedef vector<int> vi;
+
+#define f first
+#define s second
+
+signed main() {
+	ios_base::sync_with_stdio(0); cin.tie(0);
+
+	int cnt = 1;
+	while (true) {
+		int n;
+		cin >> n;
+		if (n==0) break;
+
+		int ans;
+		for (int i = 1; i <= n; ++i)  {
+			int x;
+			cin >> x;
+			if (i == x) ans = i;
+		}
+		cout << "Teste " << cnt << '\n';
+		cout << ans << "\n\n";
+	}
+
+
+	return 0;
+}

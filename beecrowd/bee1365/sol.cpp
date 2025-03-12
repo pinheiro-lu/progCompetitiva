@@ -24,20 +24,25 @@ signed main() {
 			}
 		}
 
+		/*
 		for (int i = 1; i <= r; ++i) {
 			for (int j = 1; j <= c; ++j) {
 				cerr << seat.at(i).at(j) << ' ';
 			}
 			cerr << '\n';
 		}
+		*/
 
 		int ans = c * r;
 		for (int lr = 1; lr <= r; ++lr) {
 			for (int rr = lr; rr <= r; ++rr) {
-				for (int lc = 1; lc <= c; ++lc) {
-					for (int rc = lc; rc <= c; ++rc) {
-						int sum = seat.at(rr).at(rc) - seat.at(rr).at(lc-1) - seat.at(lr-1).at(rc) + seat.at(lr-1).at(lc-1);
-						if (sum >= k) ans = min(ans, (rc-lc+1) * (rr-lr+1));
+				for (int lc = 1, rc = 1; lc <= c, rc <= c;) {
+					int sum = seat.at(rr).at(rc) - seat.at(rr).at(lc-1) - seat.at(lr-1).at(rc) + seat.at(lr-1).at(lc-1);
+					if (sum >= k) {
+						ans = min(ans, (rc-lc+1) * (rr-lr+1));
+						++lc;
+					} else {
+						++rc;
 					}
 				}
 			}

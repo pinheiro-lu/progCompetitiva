@@ -1,0 +1,68 @@
+// array<array<int, 3>, N> p: array to build the segment tree (0-indexed)
+// array<int> st: segment tree (1-indexed)
+// query: O(log n)
+// update: O(log n)
+// build: O(n)
+// N is the maximum size of the array
+struct SegTree {
+	array<array<int, 3>, 4*N> st;
+	array<int, 4*N> lazy; // lazy does not hold the same type as the segment tree
+	array<int, 3> (*comb)(array<int, 3>, array<int, 3>);
+	void build(int i, int l, int r) {
+		if (l == r) st.at(i) = p.at(l);
+		else {
+			int m = (l + r) / 2;
+			build(2*i, l, m);
+			build(2*i+1, m+1, r);
+			st.at(i) = comb(st.at(2*i), st.at(2*i+1));
+		}
+	}
+
+	SegTree(array<int, 3> (*comb)(array<int, 3>, array<int, 3>)) : comb(comb) {
+		fill(lazy.begin(), lazy.end(), 0);
+		build(1, 0, n-1);
+	}
+
+	void op(array<int, 3> &s, int times) {
+		array<int, 3> aux(s);
+		for (int i = 0; i < 3; ++i) {
+			s.at((i + times) % 3) = aux.at(i);
+		}
+	}
+
+	void propagate(int i, int l, int r) {
+		if (l != r) {
+			lazy.at(2*i) += lazy.at(i);
+			lazy.at(2*i+1) += lazy.at(i);
+		}
+		op(st.at(i), lazy.at(i));
+		lazy.at(i) = 0;
+	}
+
+	array<int, 3> query(int i, int l, int r, int a, int b) {
+		propagate(i, l, r);
+		if (l > b || a > r) return {0,0,0}; 
+		if (l >= a && b >= r) return st.at(i); 
+		int m = (l + r) / 2;
+		return comb(query(i*2, l, m, a, b), query(i*2+1, m+1,r, a, b));
+	}
+
+	void upd_range(int i, int l, int r, int a, int b) { // not the more efficient way to update a range
+		propagate(i, l, r);
+		if (l > b || a > r) return;
+		if (l >= a && b >= r) {
+			++lazy.at(i);
+			if (l != r) {
+				lazy.at(2*i) += lazy.at(i);
+				lazy.at(2*i+1) += lazy.at(i);
+			}
+			op(st.at(i), lazy.at(i));
+			lazy.at(i) = 0;
+			return;
+		}
+		int m = (l + r) / 2;
+		upd_range(i*2, l, m, a, b);
+		upd_range(i*2+1, m+1, r, a, b);
+		st.at(i) = comb(st.at(2*i), st.at(2*i+1));
+	}
+};

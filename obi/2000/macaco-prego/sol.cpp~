@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+typedef vector<int> vi;
+
+#define f first
+#define s second
+
+int n;
+
+struct rect {
+	int x, y, u, v;
+};
+
+signed main() {
+	ios_base::sync_with_stdio(0); cin.tie(0);
+
+	int cnt = 1;
+	while (true) {
+		cin >> n;
+		if (!n) break;
+
+		vector<rect> v(n);
+
+		for (int i = 0; i < n; ++i) {
+			auto &r = v.at(i);
+			cin >> r.x >> r.y >> r.u >> r.v;
+		}
+
+		rect r1 = {-10000, -10000, 10000, 10000};
+
+		for (int i = 0; i < n; ++i) {
+			auto &r2 = v.at(i);
+			r1.x = max(r1.x, r2.x);
+			r1.y = min(r1.y, r2.y);
+			r1.u = min(r1.u, r2.u);
+			r1.v = max(r1.v, r2.v);
+		}
+		cout << "Teste " << cnt++ << '\n';
+		if (r1.x < r1.u && r1.y > r1.v) cout << r1.x << ' ' << r1.y << ' ' << r1.u << ' ' << r1.v << '\n';
+		else cout << "nenhum\n";
+		cout << '\n';
+	}
+			
+
+
+	return 0;
+}

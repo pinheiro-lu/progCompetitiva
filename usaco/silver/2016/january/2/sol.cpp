@@ -1,0 +1,53 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+typedef long long ll;
+typedef vector<int> vi;
+
+#define f first
+#define s second
+
+const int MAXN = 5e4+1;
+
+int n;
+array<int, MAXN> pref;
+
+signed main() {
+	ios_base::sync_with_stdio(0); cin.tie(0);
+	freopen("div7.in", "r", stdin);
+	freopen("div7.out", "w", stdout);
+
+	cin >> n;
+
+	int fir[7], sec[7];
+	pref[0] = 0;
+
+	for (int i = 0; i < 7; ++i) {
+		fir[i] = n;
+		sec[i] = -1;
+	}
+
+	for (int i = 1; i <= n; ++i) {
+		int x;
+		cin >> x;
+		x %= 7;
+		pref[i] = (pref[i-1]+x)%7;
+	}
+
+	for (int i =1 ; i <= n; ++i) {
+		int &x = pref[i];
+		fir[x] = min(i, fir[x]);
+		sec[x] = max(i, sec[x]);
+	}
+	int ans = sec[0] == -1 ? 0 : 1;
+
+	for (int i =0; i < 7; ++i) {
+		ans = max(ans, sec[i]-fir[i]);
+	}
+
+	cout << ans << '\n';
+
+
+	return 0;
+}
