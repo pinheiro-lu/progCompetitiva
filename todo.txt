@@ -42,3 +42,6 @@
 	- D
 - Fazer upsolving do atcoder regular 194
 	- A
+- Fazer upsolving do atcoder beginner 397
+	- C
+	- D
