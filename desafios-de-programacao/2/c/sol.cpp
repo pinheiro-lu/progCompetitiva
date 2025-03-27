@@ -35,3 +35,7 @@ signed main() {
 
 	return 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7eea9b23862c83cee96cbb50bba68ddead668657
