@@ -42,13 +42,12 @@
 	- D
 - Fazer upsolving do atcoder regular 194
 	- A
-<<<<<<< HEAD
 - Fazer upsolving do codeforces 1008 div 2
 	- D
-	- E
+	- C
 - Adicionar the omnipotent monster killer ao anki
-=======
 - Fazer upsolving do atcoder beginner 397
 	- C
 	- D
->>>>>>> b0718f1bf6c3bc752aae71debee08864c86185e3
+- Fazer upsolving codeforces 1014 div 2
+	- D
