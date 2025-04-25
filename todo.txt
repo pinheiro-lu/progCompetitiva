@@ -49,6 +49,7 @@
 - Fazer upsolving do atcoder beginner 397
 	- C
 	- D
+- Adicionar Subarray Sums II ao anki (semana 3 dp)
 - Fazer upsolving codeforces 1014 div 2
 	- D
 - Adicionar counting divisors do cses ao anki
