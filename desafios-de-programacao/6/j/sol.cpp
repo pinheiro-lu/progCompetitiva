@@ -39,8 +39,8 @@ signed main() {
 	for (int j = 0; j < n; ++j) {
 		int x;
 		cin >> x;
-		if (x) {
-			ch[i].push_back(x);
+		if (x > 0) {
+			pref[i][x].f++;
 		}
 		else {
 			i++;
