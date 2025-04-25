@@ -51,3 +51,5 @@
 	- D
 - Fazer upsolving codeforces 1014 div 2
 	- D
+- Adicionar counting divisors do cses ao anki
+- Adicionar exponetiation ii semana 4 ao anki

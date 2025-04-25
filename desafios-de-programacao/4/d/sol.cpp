@@ -14,7 +14,7 @@ signed main() {
 	ios_base::sync_with_stdio(0); cin.tie(0);
 
 	vector<bool> criba(N);
-	set<int> primes;
+	vector<int> primes;
 	for (int i = 2; i < N; i++) {
 		if (!criba[i]) {
 			primes.push_back(i);
@@ -23,35 +23,33 @@ signed main() {
 			}
 		}
 	}
-	cerr << primes.size() << '\n';
 
-	vector<int> ans(N);
+	vi ans(N);
+
+	ans.at(1) = 1;
 
 	for (int i = 2; i < N; ++i) {
-		int aux = 1;
 		int x = i;
-		//cerr << x << '\n';
+		int aux = 1;
 		for (int p : primes) {
-			if (p*p > x) break;
+			if (p * p > x) break;
 			int cnt = 0;
 			while (x % p == 0) {
 				x /= p;
-				cnt++;
+				++cnt;
 			}
-			//cerr << p << ' ' << cnt << '\n';
 			aux *= (cnt + 1);
 		}
-		ans.at(i) = aux;
+		if (x > 1) aux *= 2;
+		ans[i] = aux;
 	}
-	ans.at(1) = 1;
 
 	int n;
 	cin >> n;
 	for (int i = 0; i < n; ++i) {
 		int x;
 		cin >> x;
-		if (x != 1 && ans.at(x) == 1) ans.at(x) = 2;
-		cout << ans.at(x) << '\n';
+		cout << ans[x] << '\n';
 	}
 
 	return 0;
