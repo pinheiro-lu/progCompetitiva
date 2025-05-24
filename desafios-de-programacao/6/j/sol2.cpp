@@ -12,22 +12,26 @@ int n, m;
 
 const int M = 5001;
 
-array<vi, M> ch;
 array<array<pair<int,int>, M>, M> pref;
-map<tuple<int, int, int>, int> dp;
+array<array<int, M>, M> dp;
 
-int solve(int idx, int itl, int str) {
+int solve(int idx, int itl) {
 	if (idx > m) return 0;
-	if (dp.count({idx, itl, str})) return dp[{idx, itl, str}];
+	if (dp[idx][itl] != -1) return dp[idx][itl];
+	int str = idx - itl;
 	int ans = 0;
 	ans += pref[idx][itl].f;
 	ans += pref[idx][str].s;
-	return dp[{idx, itl, str}] = ans + max(solve(idx+1, itl+1, str), solve(idx+1, itl, str+1));
+	return dp[idx][itl] = ans + max(solve(idx+1, itl+1), solve(idx+1, itl));
 }
 
 signed main() {
 	ios_base::sync_with_stdio(0); cin.tie(0);
 	cin >> n >> m;
+
+	for (int i = 0; i <= m; ++i)
+		for (int j = 0; j <= m; ++j)
+			dp[i][j] = -1;
 
 	int i = 0;
 
@@ -46,8 +50,13 @@ signed main() {
 			i++;
 		}
 	}
+	for (int k = 1; k <= m; ++k) {
+		pref[i][k].f += pref[i][k-1].f;
+		pref[i][k].s += pref[i][k-1].s;
+	}
 
-	cout << solve(0, 0, 0) << '\n';
+	cout << solve(0, 0) << '\n';
 
 	return 0;
 }
+
