@@ -1,1 +1,46 @@
+# Third-party libraries
 kactl
+
+# Backup and temporary files
+*~
+.*.un~
+*.swp
+*.swo
+
+# Compiled files
+*.o
+*.exe
+a.out
+sol
+solution
+
+# Input/output files
+*.in
+*.out
+input.txt
+output.txt
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Contest specific files
+stress
+gen
+generator
+brute
+brute_sol
+test_generator
+
+# Logs
+*.log
